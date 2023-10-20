@@ -1,24 +1,39 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 
 public class Pieces : MonoBehaviour
 {
-    GameObject Piece;
+    public GameObject Piece;
+    
+    private Transform pieceTransform;
+    public bool SelectedPiece;
+
+    public Side side;
     
     // Start is called before the first frame update
     void Start()
     {
-        Piece = this.GameObject();
     }
 
     // Update is called once per frame
     private void OnMouseDown()
     {
-        Debug.Log("I am selected !");
+        Debug.Log("I am a selected Piece!");
+        SelectedPiece = true;
+
+        if (SelectedPiece)
+        {
+            MovePiece();
+        }
+        
     }
+
+    private void MovePiece()
+    {
+        pieceTransform = GetComponent<Transform>();
+        Debug.Log(pieceTransform.position);
+        
+    }
+    
 }
