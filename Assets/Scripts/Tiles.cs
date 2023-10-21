@@ -5,7 +5,7 @@ public class Tiles : MonoBehaviour
 {
     public GameObject Tile;
 
-    private Transform tileTransform;
+    public static Transform tileTransform;
 
     public bool SelectedTile;
     // Start is called before the first frame update

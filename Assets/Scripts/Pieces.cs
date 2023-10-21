@@ -7,7 +7,7 @@ public class Pieces : MonoBehaviour
     public GameObject Piece;
     
     private Transform pieceTransform;
-    public bool SelectedPiece;
+    public static bool SelectedPiece;
 
     public Side side;
     
