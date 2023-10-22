@@ -96,6 +96,17 @@ public class ChessBoard : MonoBehaviour
                 
     }
 
+    private void Update()
+    {
+        if (Pieces.SelectedPiece && Tiles.SelectedTile)
+        {
+            Pieces.pieceTransform.position = Tiles.tileTransform.position;
+            Debug.Log("je bouge");
+            Pieces.SelectedPiece = false;
+            Tiles.SelectedTile = false;
+        }
+    }
+
     private void SetPrefabsList()
     {
         foreach (GameObject prefab in AllPieces)

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -8255117321657805438}
   m_Layer: 0
   m_Name: KingDark
-  m_TagString: Untagged
+  m_TagString: Dark
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -98,7 +98,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Piece: {fileID: 0}
-  SelectedPiece: 0
   side: 0
 --- !u!64 &-8255117321657805438
 MeshCollider:

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 249497651908807192}
   m_Layer: 0
   m_Name: KnightDark
-  m_TagString: Untagged
+  m_TagString: Dark
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -98,7 +98,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Piece: {fileID: 0}
-  SelectedPiece: 0
   side: 0
 --- !u!64 &249497651908807192
 MeshCollider:

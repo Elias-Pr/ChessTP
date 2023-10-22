@@ -6,17 +6,13 @@ public class Tiles : MonoBehaviour
     public GameObject Tile;
 
     public static Transform tileTransform;
-
-    public bool SelectedTile;
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
+    public static bool SelectedTile;
 
     private void OnMouseDown()
     {
         Debug.Log("I am a selected Tile");
         SelectedTile = true;
+        tileTransform = GetComponent<Transform>();
 
         if (SelectedTile)
         {
@@ -27,13 +23,7 @@ public class Tiles : MonoBehaviour
 
     private void Destination()
     {
-        tileTransform = GetComponent<Transform>();
         Debug.Log(tileTransform.position);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 }
