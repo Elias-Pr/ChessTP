@@ -97,8 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7edf48b83342c634691bae51900434c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Piece: {fileID: 0}
-  side: 0
+  side: 1
 --- !u!64 &-3212969308335119610
 MeshCollider:
   m_ObjectHideFlags: 0
