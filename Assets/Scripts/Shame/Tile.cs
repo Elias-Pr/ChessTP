@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace Shame
 {
-    public class Tiles : MonoBehaviour
+    public class Tile : MonoBehaviour
     {
-        public GameObject Tile;
+        public GameObject TilePrefab;
 
         public static Transform tileTransform;
         public static bool SelectedTile;

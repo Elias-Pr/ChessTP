@@ -1,7 +1,8 @@
 using Core;
 using Data;
-using Unity.VisualScripting;
+using Managers;
 using UnityEngine;
+
 
 namespace Entities
 {
@@ -9,18 +10,17 @@ namespace Entities
     
         public static Transform SelectedPieceTransform;
         //public static bool SelectedPiece;
-        public GameObject SelectedPiece;
+        
         
         
         private void OnMouseDown()
         {
-            SelectedPiece = this.GameObject();
-            SelectedPieceTransform = GetComponent<Transform>();
-            Debug.Log("I am a selected Piece at " + SelectedPieceTransform.position + " !");
+            
+            GameManager.SelectPiece(transform);
+            
         }
 
         
-
         
     }
 }

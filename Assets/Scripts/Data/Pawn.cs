@@ -9,7 +9,7 @@ namespace Data
     
         public Pawn(GameObject prefab, PlayerColor playerColor) : base(prefab, playerColor) { }
     
-        public override void PossibleMovements(ChessBoard board)
+        public override List<Vector2Int> PossibleMovements(ChessBoard board)
         {
             List<Vector2Int> possibleMoves = new List<Vector2Int>();
             
@@ -22,8 +22,8 @@ namespace Data
                 }
             }
 
-            
-            
+            return possibleMoves;
+
         }
 
         public override void ExecuteMove(ChessBoard board, Vector2Int vector2Int)

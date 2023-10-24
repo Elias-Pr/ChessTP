@@ -35,9 +35,17 @@ namespace Entities
     
         //...
     
-        private Piece[,] _matrix;
+        private static Piece[,] _matrix;
+
+        public static Piece[,] Matrix => _matrix;
+
+        private GameObject[,] _tileMatrix;
 
         public GameObject TilePrefab;
+
+        public Transform PieceParent;
+
+        public Transform TileParent;
 
         private void Awake()
         {
@@ -51,7 +59,7 @@ namespace Entities
 
         private void Start()
         {
-            Debug.Log(GameManager.Instance.toto);
+            //Debug.Log(GameManager.Instance.toto);
         }
 
         private void InitMatrix() {
@@ -85,9 +93,34 @@ namespace Entities
                 {
                     if (_matrix[x, z] != null) {
                         Vector3 position = new Vector3(x , 0, z );
-                        Instantiate(_matrix[x, z].Prefab, position, Quaternion.identity, transform);
+                        Instantiate(_matrix[x, z].Prefab, position, Quaternion.identity, PieceParent);
                     }
                 }
+            }
+        }
+
+        private void InitTileMatrix(List<Vector2Int> availableMoves)
+        {
+            
+            _tileMatrix = new GameObject[_tileCountX, _tileCountZ];
+            
+            DestroyOldTile();
+
+            foreach (Vector2Int move in availableMoves)
+            {
+                Vector3 pos = new Vector3(move.x, move.y);
+                _tileMatrix[move.x, move.y] = Instantiate(TilePrefab, pos, Quaternion.identity, TileParent);
+            }
+
+        }
+
+        private void DestroyOldTile()
+        {
+            List<Tile> tiles = new List<Tile>(TileParent.GetComponentsInChildren<Tile>());
+
+            foreach (Tile tileToDestroy in tiles)
+            {
+                Destroy(tileToDestroy.gameObject);
             }
         }
 
@@ -122,11 +155,11 @@ namespace Entities
         GameObject prefabKingL = PrefabsList["KingLight"];
 
         GameObject PawnL0 = Instantiate(prefabPL, new Vector3(0, 0, 1), Quaternion.identity, this.transform);
-        GameObject PawnL1 = Instantiate(prefabPL, new Vector3(1, 0, 1), Quaternion.identity, this.transform);
+        GameObject        PawnL1 = I      nstan      iate(p     refabPL, new Vector3(1, 0, 1), Quaternion.identity, this.transform);
         GameObject PawnL2 = Instantiate(prefabPL, new Vector3(2, 0, 1), Quaternion.identity, this.transform);
-        GameObject PawnL3 = Instantiate(prefabPL, new Vector3(3, 0, 1), Quaternion.identity, this.transform);
+        GameObject PawnL3 =       Instantia         te       (prefabPL, new Vector3(3, 0, 1), Quaternion.identity, this.transform);
         GameObject PawnL4 = Instantiate(prefabPL, new Vector3(4, 0, 1), Quaternion.identity, this.transform);
-        GameObject PawnL5 = Instantiate(prefabPL, new Vector3(5, 0, 1), Quaternion.identity, this.transform);
+        GameObject         PawnL5 =         Instan       tiate(prefabPL, new Vector3(5, 0, 1), Quaternion.identity, this.transform);
         GameObject PawnL6 = Instantiate(prefabPL, new Vector3(6, 0, 1), Quaternion.identity, this.transform);
         GameObject PawnL7 = Instantiate(prefabPL, new Vector3(7, 0, 1), Quaternion.identity, this.transform);
         GameObject BishopL1 = Instantiate(prefabBL, new Vector3(2, 0, 0), Quaternion.identity, this.transform);
