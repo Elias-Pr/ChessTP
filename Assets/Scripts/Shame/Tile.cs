@@ -1,32 +1,21 @@
-
+﻿using System.Collections.Generic;
+using Core;
+using Entities;
 using UnityEngine;
 
-namespace Shame
+namespace Data
 {
-    public class Tile : MonoBehaviour
-    {
+    public abstract class Tile {
+
         public GameObject TilePrefab;
+        public PlayerColor PlayerColor;
 
-        public static Transform tileTransform;
-        public static bool SelectedTile;
-
-        private void OnMouseDown()
-        {
-            Debug.Log("I am a selected Tile");
-            SelectedTile = true;
-            tileTransform = GetComponent<Transform>();
-
-            if (SelectedTile)
-            {
-                Destination();
-            }
-
+        protected Tile(GameObject tileprefab, PlayerColor playerColor) {
+            TilePrefab = tileprefab;
         }
 
-        private void Destination()
-        {
-            Debug.Log(tileTransform.position);
-        }
-    
+        public abstract List<Vector2Int> PossibleMovements(ChessBoard board);
+        public abstract void ExecuteMove(ChessBoard board, Vector2Int vector2Int);
+
     }
 }
