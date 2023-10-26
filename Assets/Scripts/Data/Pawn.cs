@@ -7,7 +7,9 @@ namespace Data
 {
     public class Pawn : Piece {
     
-        public Pawn(GameObject prefab, PlayerColor playerColor) : base(prefab, playerColor) { }
+        public Pawn(GameObject prefab, PlayerColor playerColor, GameObject handler = null) : base(prefab, playerColor, handler)
+        {
+        }
     
         public override List<Vector2Int> PossibleMovements(ChessBoard board)
         {
@@ -32,5 +34,6 @@ namespace Data
         }
 
 
+        
     }
 }

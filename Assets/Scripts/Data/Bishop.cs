@@ -7,7 +7,9 @@ namespace Data
 {
     public class Bishop : Piece
     {
-        public Bishop(GameObject prefab, PlayerColor playerColor) : base(prefab, playerColor) { }
+        public Bishop(GameObject prefab, PlayerColor playerColor, GameObject handler = null) : base(prefab, playerColor, handler)
+        {
+        }
     
         public override List<Vector2Int> PossibleMovements(ChessBoard board)
         {

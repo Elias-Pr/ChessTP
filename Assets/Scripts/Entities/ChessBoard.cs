@@ -84,14 +84,14 @@ namespace Entities
 
         private void DisplayMatrix() {
             // Destroy all current pieces
-            GameObject.FindObjectsOfType<PieceHandler>();
-            /*foreach (Piece piece in _matrix)
+            List<PieceHandler> Childrens = new List<PieceHandler>(FindObjectsOfType<PieceHandler>());
+            foreach (PieceHandler handler in Childrens)
             {
-                if (piece!=null)
+                if (handler!=null)
                 {
-                    DestroyImmediate(piece.Prefab, true);
+                    Destroy(handler.gameObject);
                 }
-            }*/
+            }
             
             // Instantiate all pieces
             
@@ -100,7 +100,8 @@ namespace Entities
                 {
                     if (_matrix[x, z] != null) {
                         Vector3 position = new Vector3(x , 0, z );
-                        Instantiate(_matrix[x, z].Prefab, position, Quaternion.identity, PieceParent);
+                        _matrix[x,z].Behaviour = Instantiate(_matrix[x, z].Prefab, position, Quaternion.identity, PieceParent);
+                        
                     }
                 }
             }
@@ -147,13 +148,7 @@ namespace Entities
 
         private void Update()
         {
-            /*if (PieceHandler.SelectedPiece && Tiles.SelectedTile)
-            {
-                PieceHandler.pieceTransform.position = Tiles.tileTransform.position;
-                Debug.Log("je bouge");
-                PieceHandler.SelectedPiece = false;
-                Tiles.SelectedTile = false;
-            }*/
+             
         }
 
         /*private void SetPrefabsList()

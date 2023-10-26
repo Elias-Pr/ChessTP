@@ -6,8 +6,10 @@ using UnityEngine;
 namespace Data
 {
     public class Rook : Piece {
-    
-        public Rook(GameObject prefab, PlayerColor playerColor) : base(prefab, playerColor) { }
+        
+        public Rook(GameObject prefab, PlayerColor playerColor, GameObject handler = null) : base(prefab, playerColor, handler)
+        {
+        }
     
         public override List<Vector2Int> PossibleMovements(ChessBoard board) {
             throw new System.NotImplementedException();
@@ -16,6 +18,7 @@ namespace Data
         public override void ExecuteMove(ChessBoard board, Vector2Int vector2Int) {
             throw new System.NotImplementedException();
         }
-    
+
+        
     }
 }

@@ -7,7 +7,9 @@ namespace Data
 {
     public class Knight : Piece
     {
-        public Knight(GameObject prefab, PlayerColor playerColor) : base(prefab, playerColor) { }
+        public Knight(GameObject prefab, PlayerColor playerColor, GameObject handler = null) : base(prefab, playerColor, handler)
+        {
+        }
         
         public override List<Vector2Int> PossibleMovements(ChessBoard board)
         {
@@ -18,5 +20,7 @@ namespace Data
         {
             throw new System.NotImplementedException();
         }
+
+
     }
 }
