@@ -1,16 +1,12 @@
-
 using Managers;
 using UnityEngine;
 
-namespace Shame
+namespace Tile
 {
     public class TileHandler : MonoBehaviour
     {
-        
-
         public static Transform SelectedtileTransform;
         
-
         private void OnMouseDown()
         {
             GameManager.SelectTile(transform);

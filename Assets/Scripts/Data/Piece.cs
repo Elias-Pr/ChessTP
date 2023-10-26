@@ -36,8 +36,7 @@ namespace Data
             return availableMoves;
         }
         
-        public abstract List<Vector2Int> PossibleMovements(ChessBoard board);
-        public abstract void ExecuteMove(ChessBoard board, Vector2Int vector2Int);
+        
 
     }
 }

@@ -12,16 +12,6 @@ namespace Data
         {
         }
     
-        public override List<Vector2Int> PossibleMovements(ChessBoard board)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void ExecuteMove(ChessBoard board, Vector2Int vector2Int)
-        {
-            throw new System.NotImplementedException();
-        }
-
         
     }
 }

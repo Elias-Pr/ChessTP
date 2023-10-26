@@ -1,71 +1,91 @@
+using System;
 using System.Collections.Generic;
 using Core;
 using Data;
 using Entities;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Managers {
+    
     public class GameManager : MonoBehaviourSingleton<GameManager> {
 
-        //public int a;
-        //public string toto;
-        
-        private static Piece SelectedPiece;
-        private static Vector2Int SelectedTile;
-        public static bool PieceIsSelected;
-        public static bool TileIsSelected;
-        private static Vector2Int SelectedPiecePosition;
+        private static Piece _selectedPiece;
+        private static Vector2Int _selectedTile;
+        private static Vector2Int _selectedPiecePosition;
+        private static bool PieceIsSelected => _selectedPiece != null;
+        private static bool TileIsSelected => _selectedTile != null;
+
+        private PlayerColor _playerTurn = PlayerColor.White; 
+        public PlayerColor Opponent => _playerTurn == PlayerColor.White ? PlayerColor.Black : PlayerColor.White;
+
+        private bool _doOnce = true;
+
+        private void Start()
+        {
+            Debug.Log("test Matrix");
+            for (int c = 0;  c<8; c++)
+            {
+                for (int r = 0; r < 8; r++)
+                {
+                    Debug.Log(ChessBoard.Matrix[_selectedTile.x,_selectedTile.y].Behaviour.gameObject.name);
+                }
+            }
+        }
+
+        private void Update()
+        {
+            if (!PieceIsSelected || !TileIsSelected) return;
+            if (_doOnce)
+            {
+                //ResolveMove();
+                _doOnce = false;
+            }
+            
+        }
 
         public static void SelectPiece(Transform piece)
         {
-            SelectedPiecePosition = new Vector2Int((int)piece.position.x, (int)piece.position.z);
-
-            SelectedPiece = ChessBoard.Matrix[SelectedPiecePosition.x, SelectedPiecePosition.y];
+            if (piece==null)
+            {
+                throw new NullReferenceException("Cannot select Ghostpiece");
+            }
             
-            Debug.Log("I am a selected Piece at " + SelectedPiecePosition.x + SelectedPiecePosition.y + " !");
-
-            PieceIsSelected = true;
-
-            List<Vector2Int> availableMoves = SelectedPiece.GetAvailableMoves();
+            _selectedPiecePosition = new Vector2Int((int)piece.position.x, (int)piece.position.z);
             
+            if ((_selectedPiecePosition.x < 0 && _selectedPiecePosition.x > 7)
+                || (_selectedPiecePosition.y < 0 && _selectedPiecePosition.y > 7))
+            {
+                return;
+            }
+            
+            _selectedPiece = ChessBoard.Matrix[_selectedPiecePosition.x, _selectedPiecePosition.y];
+
+            List<Vector2Int> availableMoves = _selectedPiece.GetAvailableMoves(); 
             ChessBoard.GenerateTiles(availableMoves);
+            
         }
 
         public static void SelectTile(Transform tile)
         {
             Vector2Int position = new Vector2Int((int)tile.position.x, (int)tile.position.z);
 
-            if (SelectedPiece == null) return;
+            if (_selectedPiece == null) return;
 
-            SelectedTile = position;
-            
-            Debug.Log("I am a selected Tile at " + position.x + position.y + " !");
-
-            TileIsSelected = true;
-
-            if (PieceIsSelected && TileIsSelected) Move();
+            _selectedTile = position;
         }
         
-        private static void Move()
+        private void ResolveMove()
         {
-            if (SelectedPiece != null)
-            {
-                ChessBoard.Matrix[SelectedPiecePosition.x, SelectedPiecePosition.y] = null;
-                ChessBoard.Matrix[SelectedTile.x, SelectedTile.y] = SelectedPiece;
+            Piece destination = ChessBoard.Matrix[_selectedTile.x, _selectedTile.y];
+                
+            if ( destination != null && destination.PlayerColor == Opponent)
+                Destroy(ChessBoard.Matrix[_selectedTile.x,_selectedTile.y].Behaviour.gameObject);
 
-                Vector3 newPosition = new Vector3(SelectedTile.x,0,SelectedTile.y);
-                SelectedPiece.Behaviour.transform.position = newPosition;
-                    
-                PieceIsSelected = false;
-                TileIsSelected = false;
+            ChessBoard.Matrix[_selectedTile.x, _selectedTile.y] = _selectedPiece;
+            ChessBoard.Matrix[_selectedPiecePosition.x, _selectedPiecePosition.y] = null;
 
-                Debug.Log("Piece moved to " + SelectedTile.x + ", " + SelectedTile.y);
-            }
-            else
-            {
-                    Debug.Log("Invalid move!");
-            }
+            ChessBoard.Matrix[_selectedTile.x, _selectedTile.y].Behaviour.transform.position =
+                new Vector3(_selectedTile.x, 0, _selectedTile.y);
         }
     }
 }
