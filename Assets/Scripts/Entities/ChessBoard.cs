@@ -38,6 +38,8 @@ namespace Entities
 
         public Transform tileParent;
 
+        private static GameObject _tilePrefab;
+
         private static Transform _pieceParent;
 
         private static Transform _tileParent;
@@ -48,6 +50,7 @@ namespace Entities
         {
             _pieceParent = pieceParent;
             _tileParent = tileParent;
+            _tilePrefab = tilePrefab;
             
             InitMatrix();
             InitAllPiecesBehaviours();
@@ -94,12 +97,15 @@ namespace Entities
         
         public static void GenerateTiles(List<Vector2Int> tilesPosition)
         {
+            
+
             DestroyOldTiles();
             foreach (Vector2Int item in tilesPosition)
             {
                 Vector3 worldPosition = new Vector3(item.x, 0, item.y);
-                Instantiate(_tileParent, worldPosition, Quaternion.identity, _tileParent);
+                Instantiate(_tilePrefab, worldPosition, Quaternion.identity, _tileParent);
             }
+            
         }
 
         private static void DestroyOldTiles()

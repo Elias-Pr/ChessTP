@@ -10,6 +10,7 @@ namespace Tile
         private void OnMouseDown()
         {
             GameManager.SelectTile(transform);
+
         }
     }
 }

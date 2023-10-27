@@ -12,13 +12,11 @@ namespace Managers {
         private static Piece _selectedPiece;
         private static Vector2Int _selectedTile;
         private static Vector2Int _selectedPiecePosition;
-        private static bool PieceIsSelected => _selectedPiece != null;
-        private static bool TileIsSelected => _selectedTile != null;
+        private static bool PieceIsSelected;
+        private static bool TileIsSelected;
 
-        private PlayerColor _playerTurn = PlayerColor.White; 
-        public PlayerColor Opponent => _playerTurn == PlayerColor.White ? PlayerColor.Black : PlayerColor.White;
-
-        private bool _doOnce = true;
+        private static PlayerColor _playerTurn = PlayerColor.White; 
+        public static PlayerColor Opponent => _playerTurn == PlayerColor.White ? PlayerColor.Black : PlayerColor.White;
 
         private void Start()
         {
@@ -34,13 +32,23 @@ namespace Managers {
 
         private void Update()
         {
-            if (!PieceIsSelected || !TileIsSelected) return;
-            if (_doOnce)
+            
+            if (PieceIsSelected && TileIsSelected)
             {
-                //ResolveMove();
-                _doOnce = false;
+                ResolveMove();
+                
+                ChangeTurn();
+                Debug.Log(_playerTurn);
             }
             
+            
+        }
+
+        private void ChangeTurn()
+        {
+            PieceIsSelected = false;
+            TileIsSelected = false;
+            _playerTurn = Opponent;
         }
 
         public static void SelectPiece(Transform piece)
@@ -60,6 +68,18 @@ namespace Managers {
             
             _selectedPiece = ChessBoard.Matrix[_selectedPiecePosition.x, _selectedPiecePosition.y];
 
+            if (_selectedPiece.PlayerColor == Opponent)
+            {
+                Debug.Log("You can't play this piece ! Scumbag !");
+                _selectedPiece = null;
+                _selectedPiecePosition = Vector2Int.zero;
+                _selectedTile = Vector2Int.zero;
+                
+                return;
+            }
+
+            PieceIsSelected = true;
+
             List<Vector2Int> availableMoves = _selectedPiece.GetAvailableMoves(); 
             ChessBoard.GenerateTiles(availableMoves);
             
@@ -72,20 +92,27 @@ namespace Managers {
             if (_selectedPiece == null) return;
 
             _selectedTile = position;
+
+            TileIsSelected = true;
+            
+            
         }
         
         private void ResolveMove()
         {
             Piece destination = ChessBoard.Matrix[_selectedTile.x, _selectedTile.y];
-                
-            if ( destination != null && destination.PlayerColor == Opponent)
-                Destroy(ChessBoard.Matrix[_selectedTile.x,_selectedTile.y].Behaviour.gameObject);
+
+            if (destination != null && destination.PlayerColor == Opponent)
+            { 
+                Destroy(ChessBoard.Matrix[_selectedTile.x, _selectedTile.y].Behaviour.gameObject);
+            }
 
             ChessBoard.Matrix[_selectedTile.x, _selectedTile.y] = _selectedPiece;
             ChessBoard.Matrix[_selectedPiecePosition.x, _selectedPiecePosition.y] = null;
 
             ChessBoard.Matrix[_selectedTile.x, _selectedTile.y].Behaviour.transform.position =
-                new Vector3(_selectedTile.x, 0, _selectedTile.y);
+            new Vector3(_selectedTile.x, 0, _selectedTile.y);
+            
         }
     }
 }
