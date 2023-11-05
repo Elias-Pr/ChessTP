@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Core;
 using Entities;
+using Managers;
 using UnityEngine;
 
 namespace Data
@@ -11,7 +12,26 @@ namespace Data
         {
         }
         
+        public override List<Vector2Int> GetAvailableMoves()
+        {
+            Vector2Int position = GameManager.Instance.SelectedPiecePosition;
+    
+            List<Vector2Int> availableMoves = new List<Vector2Int>();
 
+            // Define the eight possible knight move directions
+            int[] xDirections = { 2, 2, -2, -2, 1, 1, -1, -1 };
+            int[] yDirections = { 1, -1, 1, -1, 2, -2, 2, -2 };
+
+            for (int i = 0; i < 8; i++)
+            {
+                int newX = position.x + xDirections[i];
+                int newY = position.y + yDirections[i];
+                
+                availableMoves.Add(new Vector2Int(newX, newY));
+            }
+
+            return availableMoves;
+        }
 
     }
 }

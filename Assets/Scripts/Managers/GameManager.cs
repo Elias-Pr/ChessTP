@@ -9,14 +9,16 @@ namespace Managers {
     
     public class GameManager : MonoBehaviourSingleton<GameManager> {
 
-        private static Piece _selectedPiece;
-        private static Vector2Int _selectedTile;
-        private static Vector2Int _selectedPiecePosition;
-        private static bool PieceIsSelected;
-        private static bool TileIsSelected;
+        private Piece _selectedPiece;
+        private Vector2Int _selectedTile;
+        public Vector2Int SelectedPiecePosition;
+        private bool PieceIsSelected;
+        private bool TileIsSelected;
+        
+        
 
-        private static PlayerColor _playerTurn = PlayerColor.White; 
-        public static PlayerColor Opponent => _playerTurn == PlayerColor.White ? PlayerColor.Black : PlayerColor.White;
+        private PlayerColor _playerTurn = PlayerColor.White; 
+        public PlayerColor Opponent => _playerTurn == PlayerColor.White ? PlayerColor.Black : PlayerColor.White;
 
         private void Start()
         {
@@ -33,16 +35,29 @@ namespace Managers {
         private void Update()
         {
             
-            if (PieceIsSelected && TileIsSelected)
+            if (_playerTurn == PlayerColor.White)
             {
-                ResolveMove();
-                
-                ChangeTurn();
-                Debug.Log(_playerTurn);
+                    
+                DisableOpponentPieceColliders(PlayerColor.Black);
+            }
+            else if (_playerTurn == PlayerColor.Black)
+            {
+                DisableOpponentPieceColliders(PlayerColor.White);
             }
             
-            
+            if (PieceIsSelected && TileIsSelected)
+            {
+                
+                ResolveMove();
+
+                EnableOpponentPieceColliders(PlayerColor.Black);
+                EnableOpponentPieceColliders(PlayerColor.White);
+                
+                Debug.Log(_playerTurn);
+            }
+
         }
+        
 
         private void ChangeTurn()
         {
@@ -51,28 +66,33 @@ namespace Managers {
             _playerTurn = Opponent;
         }
 
-        public static void SelectPiece(Transform piece)
+        public  void SelectPiece(Transform piece)
         {
             if (piece==null)
             {
                 throw new NullReferenceException("Cannot select Ghostpiece");
             }
             
-            _selectedPiecePosition = new Vector2Int((int)piece.position.x, (int)piece.position.z);
+            SelectedPiecePosition = new Vector2Int((int)piece.position.x, (int)piece.position.z);
             
-            if ((_selectedPiecePosition.x < 0 && _selectedPiecePosition.x > 7)
-                || (_selectedPiecePosition.y < 0 && _selectedPiecePosition.y > 7))
+            if ((SelectedPiecePosition.x < 0 && SelectedPiecePosition.x > 7)
+                || (SelectedPiecePosition.y < 0 && SelectedPiecePosition.y > 7))
             {
                 return;
             }
             
-            _selectedPiece = ChessBoard.Matrix[_selectedPiecePosition.x, _selectedPiecePosition.y];
+            if (_selectedPiece != null)
+            {
+                _selectedPiece.Behaviour.GetComponent<PieceHandler>().Unselected();
+            }
+            
+            _selectedPiece = ChessBoard.Matrix[SelectedPiecePosition.x, SelectedPiecePosition.y];
 
             if (_selectedPiece.PlayerColor == Opponent)
             {
                 Debug.Log("You can't play this piece ! Scumbag !");
                 _selectedPiece = null;
-                _selectedPiecePosition = Vector2Int.zero;
+                SelectedPiecePosition = Vector2Int.zero;
                 _selectedTile = Vector2Int.zero;
                 
                 return;
@@ -85,7 +105,7 @@ namespace Managers {
             
         }
 
-        public static void SelectTile(Transform tile)
+        public  void SelectTile(Transform tile)
         {
             Vector2Int position = new Vector2Int((int)tile.position.x, (int)tile.position.z);
 
@@ -100,19 +120,82 @@ namespace Managers {
         
         private void ResolveMove()
         {
-            Piece destination = ChessBoard.Matrix[_selectedTile.x, _selectedTile.y];
+            Piece destination = ChessBoard.GetTile(_selectedTile.x, _selectedTile.y);
 
-            if (destination != null && destination.PlayerColor == Opponent)
-            { 
-                Destroy(ChessBoard.Matrix[_selectedTile.x, _selectedTile.y].Behaviour.gameObject);
+            
+            if (destination == null || destination.PlayerColor == Opponent)
+            {
+                // Move is valid
+                if (destination != null && destination.PlayerColor == Opponent)
+                {
+                    Destroy(ChessBoard.Matrix[_selectedTile.x, _selectedTile.y].Behaviour.gameObject);
+                }
+                
+                ChessBoard.Matrix[_selectedTile.x, _selectedTile.y] = _selectedPiece;
+                ChessBoard.Matrix[SelectedPiecePosition.x, SelectedPiecePosition.y] = null;
+                
+                ChessBoard.Matrix[_selectedTile.x, _selectedTile.y].Behaviour.transform.position =
+                    new Vector3(_selectedTile.x, 0, _selectedTile.y);
+
+                // Deselect the piece
+                _selectedPiece.Behaviour.GetComponent<PieceHandler>().Unselected();
+                _selectedPiece = null;
+                PieceIsSelected = false;
+                ChangeTurn();
             }
-
-            ChessBoard.Matrix[_selectedTile.x, _selectedTile.y] = _selectedPiece;
-            ChessBoard.Matrix[_selectedPiecePosition.x, _selectedPiecePosition.y] = null;
-
-            ChessBoard.Matrix[_selectedTile.x, _selectedTile.y].Behaviour.transform.position =
-            new Vector3(_selectedTile.x, 0, _selectedTile.y);
+            else
+            {
+                Debug.Log("Invalid move! Destination tile is occupied by a friendly piece.");
+            }
             
         }
+        
+        private void DisableOpponentPieceColliders(PlayerColor opponentColor)
+        {
+            // Find all opponent pieces in the chessboard and disable their colliders
+            foreach (Piece piece in ChessBoard.Matrix)
+            {
+                if (piece != null && piece.PlayerColor == opponentColor)
+                {
+                    Collider pieceCollider = piece.Behaviour.GetComponent<Collider>();
+                    if (pieceCollider != null)
+                    {
+                        pieceCollider.enabled = false;
+                    }
+                }
+            }
+        }
+
+        private void EnableOpponentPieceColliders(PlayerColor opponentColor)
+        {
+            // Find all opponent pieces in the chessboard and enable their colliders
+            foreach (Piece piece in ChessBoard.Matrix)
+            {
+                if (piece != null && piece.PlayerColor == opponentColor)
+                {
+                    Collider pieceCollider = piece.Behaviour.GetComponent<Collider>();
+                    if (pieceCollider != null)
+                    {
+                        pieceCollider.enabled = true;
+                    }
+                }
+            }
+        }
+        
+        public bool IsPositionEmpty(int x, int y)
+        {
+            // Ensure that the coordinates are within the chessboard boundaries
+            if (x < 0 || x >= ChessBoard.Matrix.GetLength(0) || y < 0 || y >= ChessBoard.Matrix.GetLength(1))
+            {
+                return true; // Position is considered empty if it's outside the board.
+            }
+
+            // Check if there's a piece at the specified position
+            Piece piece = ChessBoard.Matrix[x, y];
+
+            // The position is considered empty if there's no piece at that location
+            return piece == null;
+        }
+
     }
 }

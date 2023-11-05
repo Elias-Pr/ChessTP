@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Core;
-using Entities;
 using UnityEngine;
 
 namespace Data
@@ -17,8 +16,7 @@ namespace Data
             Prefab = prefab;
             PlayerColor = playerColor;
         }
-
-        //ToRemove
+        
         public virtual List<Vector2Int> GetAvailableMoves()
         {
             List<Vector2Int> availableMoves = new List<Vector2Int>
@@ -35,8 +33,5 @@ namespace Data
 
             return availableMoves;
         }
-        
-        
-
     }
 }

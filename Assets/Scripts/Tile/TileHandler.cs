@@ -9,7 +9,7 @@ namespace Tile
         
         private void OnMouseDown()
         {
-            GameManager.SelectTile(transform);
+            GameManager.Instance.SelectTile(transform);
 
         }
     }

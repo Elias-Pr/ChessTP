@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Core;
 using Data;
@@ -121,7 +122,18 @@ namespace Entities
         }
         
         
+        public static Piece GetTile(Vector2Int coordinates)
+        {
+            int col = coordinates.x;
+            int row = coordinates.y;
 
+            return _matrix[col,row];
+        }
+        
+        public static Piece GetTile(int col, int row)
+        {
+            return _matrix[col,row];
+        }
 
     }
 }
