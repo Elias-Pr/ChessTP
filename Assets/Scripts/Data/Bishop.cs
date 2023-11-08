@@ -18,7 +18,6 @@ namespace Data
             
             List<Vector2Int> availableMoves = new List<Vector2Int>();
 
-            // Define the four possible diagonal directions a bishop can move
             int[] xDirections = { 1, 1, -1, -1 };
             int[] yDirections = { 1, -1, 1, -1 };
 

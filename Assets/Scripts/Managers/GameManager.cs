@@ -14,6 +14,8 @@ namespace Managers {
         public Vector2Int SelectedPiecePosition;
         private bool PieceIsSelected;
         private bool TileIsSelected;
+        public Camera WhiteCam;
+        public Camera BlackCam;
         
         
 
@@ -64,6 +66,16 @@ namespace Managers {
             PieceIsSelected = false;
             TileIsSelected = false;
             _playerTurn = Opponent;
+            if (_playerTurn == PlayerColor.White)
+            {
+                WhiteCam.gameObject.SetActive(true);
+                BlackCam.gameObject.SetActive(false);
+            }
+            else if (_playerTurn == PlayerColor.Black)
+            {
+                WhiteCam.gameObject.SetActive(false);
+                BlackCam.gameObject.SetActive(true);
+            }
         }
 
         public  void SelectPiece(Transform piece)
@@ -125,7 +137,6 @@ namespace Managers {
             
             if (destination == null || destination.PlayerColor == Opponent)
             {
-                // Move is valid
                 if (destination != null && destination.PlayerColor == Opponent)
                 {
                     Destroy(ChessBoard.Matrix[_selectedTile.x, _selectedTile.y].Behaviour.gameObject);
@@ -137,7 +148,6 @@ namespace Managers {
                 ChessBoard.Matrix[_selectedTile.x, _selectedTile.y].Behaviour.transform.position =
                     new Vector3(_selectedTile.x, 0, _selectedTile.y);
 
-                // Deselect the piece
                 _selectedPiece.Behaviour.GetComponent<PieceHandler>().Unselected();
                 _selectedPiece = null;
                 PieceIsSelected = false;
@@ -152,7 +162,6 @@ namespace Managers {
         
         private void DisableOpponentPieceColliders(PlayerColor opponentColor)
         {
-            // Find all opponent pieces in the chessboard and disable their colliders
             foreach (Piece piece in ChessBoard.Matrix)
             {
                 if (piece != null && piece.PlayerColor == opponentColor)
@@ -168,7 +177,6 @@ namespace Managers {
 
         private void EnableOpponentPieceColliders(PlayerColor opponentColor)
         {
-            // Find all opponent pieces in the chessboard and enable their colliders
             foreach (Piece piece in ChessBoard.Matrix)
             {
                 if (piece != null && piece.PlayerColor == opponentColor)
@@ -184,16 +192,15 @@ namespace Managers {
         
         public bool IsPositionEmpty(int x, int y)
         {
-            // Ensure that the coordinates are within the chessboard boundaries
             if (x < 0 || x >= ChessBoard.Matrix.GetLength(0) || y < 0 || y >= ChessBoard.Matrix.GetLength(1))
             {
-                return true; // Position is considered empty if it's outside the board.
+                return true;
             }
 
-            // Check if there's a piece at the specified position
+            
             Piece piece = ChessBoard.Matrix[x, y];
 
-            // The position is considered empty if there's no piece at that location
+            
             return piece == null;
         }
 

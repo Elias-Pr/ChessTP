@@ -14,7 +14,7 @@ namespace Entities
     {
         public static Transform SelectedPieceTransform;
         public Material SelectedMaterial;
-        public Material OriginalMaterial; // Store the original material
+        public Material OriginalMaterial;
 
         private void OnMouseDown()
         {
@@ -24,7 +24,6 @@ namespace Entities
 
         public void Unselected()
         {
-            // Restore the original material when the mouse exits
             GetComponent<Renderer>().material = OriginalMaterial;
         }
     }

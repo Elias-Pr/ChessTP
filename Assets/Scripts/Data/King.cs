@@ -18,7 +18,6 @@ namespace Data
 
             List<Vector2Int> availableMoves = new List<Vector2Int>();
 
-            // Define the eight possible directions a king can move (horizontal, vertical, and diagonal) with a distance of 1
             int[] xDirections = { 1, -1, 0, 0, 1, -1, 1, -1 };
             int[] yDirections = { 0, 0, 1, -1, 1, -1, -1, 1 };
 
@@ -41,8 +40,9 @@ namespace Data
             return x >= 0 && x <= 7 && y >= 0 && y <= 7;
         }
 
-        // Check if the king is exposed to check from opponent's pieces
-        public bool IsKingExposed()
+        //Tentative pour Check
+        
+        /*public bool IsKingExposed()
         {
             PlayerColor opponentColor = (PlayerColor == PlayerColor.White) ? PlayerColor.Black : PlayerColor.White;
             List<Piece> opponentPieces = FindPiecesOfOpponent(opponentColor);
@@ -55,13 +55,15 @@ namespace Data
 
                 if (availableMoves.Contains(kingPosition))
                 {
-                    return true; // King is exposed to check
+                    return true; 
                 }
             }
 
-            return false; // King is not exposed to check
-        }
-
+            return false; 
+        }*/
+        
+        //Tentative, trouver la position des pièces qui check le roi
+        
         private List<Piece> FindPiecesOfOpponent(PlayerColor opponentColor)
         {
             List<Piece> opponentPieces = new List<Piece>();

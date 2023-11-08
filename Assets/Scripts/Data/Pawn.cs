@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Core;
+using Entities;
 using Managers;
 using UnityEngine;
 
@@ -19,7 +20,6 @@ namespace Data
 
             int forwardDirection = (PlayerColor == PlayerColor.White) ? 1 : -1;
 
-            // Pawn can move forward one square
             int newX = position.x + forwardDirection;
             int newY = position.y;
             
@@ -28,7 +28,6 @@ namespace Data
                 availableMoves.Add(new Vector2Int(newX, newY));
             }
 
-            // Pawn can make a double move on its first turn
             if ((PlayerColor == PlayerColor.White && position.x == 1) || (PlayerColor == PlayerColor.Black && position.x == 6))
             {
                 int doubleMoveX = position.x + 2 * forwardDirection;
@@ -38,17 +37,20 @@ namespace Data
                 }
             }
 
-            // Pawn can capture diagonally
             int[] captureYDirections = { -1, 1 };
             
             foreach (int captureDirection in captureYDirections)
             {
                 int captureX = position.x + forwardDirection;
                 int captureY = position.y + captureDirection;
-                
-                if (IsWithinChessboardBounds(captureX, captureY))
+
+                if (IsWithinChessboardBounds(captureX, captureY) && !GameManager.Instance.IsPositionEmpty(captureX, captureY))
                 {
-                    availableMoves.Add(new Vector2Int(captureX, captureY));
+                    Piece pieceToCapture = ChessBoard.Matrix[captureX, captureY];
+                    if (pieceToCapture != null && pieceToCapture.PlayerColor != PlayerColor)
+                    {
+                        availableMoves.Add(new Vector2Int(captureX, captureY));
+                    }
                 }
             }
 

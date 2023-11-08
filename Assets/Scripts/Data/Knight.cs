@@ -18,7 +18,6 @@ namespace Data
     
             List<Vector2Int> availableMoves = new List<Vector2Int>();
 
-            // Define the eight possible knight move directions
             int[] xDirections = { 2, 2, -2, -2, 1, 1, -1, -1 };
             int[] yDirections = { 1, -1, 1, -1, 2, -2, 2, -2 };
 

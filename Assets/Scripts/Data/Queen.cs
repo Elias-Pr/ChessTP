@@ -15,12 +15,10 @@ namespace Data
     
         public override List<Vector2Int> GetAvailableMoves()
         {
-            // Update the position based on the current selected piece's position
             Vector2Int position = GameManager.Instance.SelectedPiecePosition;
 
             List<Vector2Int> availableMoves = new List<Vector2Int>();
 
-            // Define the eight possible directions a queen can move (horizontal, vertical, and diagonal)
             int[] xDirections = { 1, -1, 0, 0, 1, -1, 1, -1 };
             int[] yDirections = { 0, 0, 1, -1, 1, -1, -1, 1 };
 
