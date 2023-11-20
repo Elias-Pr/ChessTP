@@ -698,7 +698,7 @@ MonoBehaviour:
   blackBishopPrefab: {fileID: 3899453343905317409, guid: f6033bb9e05be8b4386b8e7a7054c8b3, type: 3}
   blackKingPrefab: {fileID: 2850938381697987287, guid: 72b6738cc161139429fdf5f28d53b9af, type: 3}
   blackQueenPrefab: {fileID: 1922914811412504781, guid: b3321ed2f26ca5b45ab00a488ae2b0c9, type: 3}
-  tilePrefab: {fileID: 794717459513724965, guid: bbcc71be3806a514699a3d2d42a79888, type: 3}
+  tilePrefab: {fileID: 887508748117380975, guid: c983f6474dc090f4abcc1f77e0d0aaf7, type: 3}
   pieceParent: {fileID: 485616756}
   tileParent: {fileID: 1424171797}
 --- !u!1660057539 &9223372036854775807
