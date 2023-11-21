@@ -26,10 +26,18 @@ namespace Data
                 int newX = position.x + xDirections[i];
                 int newY = position.y + yDirections[i];
                 
-                availableMoves.Add(new Vector2Int(newX, newY));
+                if (IsWithinChessboardBounds(newX, newY))
+                {
+                    availableMoves.Add(new Vector2Int(newX, newY));
+                }
             }
 
             return availableMoves;
+        }
+        
+        private bool IsWithinChessboardBounds(int x, int y)
+        {
+            return x >= 0 && x <= 7 && y >= 0 && y <= 7;
         }
 
     }
