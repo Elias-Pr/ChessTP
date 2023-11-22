@@ -157,6 +157,7 @@ namespace Managers {
             {
                 Debug.Log("Invalid move! Destination tile is occupied by a friendly piece.");
             }
+            ChessBoard.DestroyOldTiles();
             
         }
         

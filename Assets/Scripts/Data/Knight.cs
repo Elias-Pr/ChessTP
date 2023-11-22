@@ -15,7 +15,7 @@ namespace Data
         public override List<Vector2Int> GetAvailableMoves()
         {
             Vector2Int position = GameManager.Instance.SelectedPiecePosition;
-    
+
             List<Vector2Int> availableMoves = new List<Vector2Int>();
 
             int[] xDirections = { 2, 2, -2, -2, 1, 1, -1, -1 };
@@ -25,14 +25,20 @@ namespace Data
             {
                 int newX = position.x + xDirections[i];
                 int newY = position.y + yDirections[i];
-                
+
                 if (IsWithinChessboardBounds(newX, newY))
                 {
-                    availableMoves.Add(new Vector2Int(newX, newY));
+                    Piece piece = ChessBoard.GetTile(newX, newY);
+
+                    if (piece == null || piece.PlayerColor == GameManager.Instance.Opponent)
+                    {
+                        availableMoves.Add(new Vector2Int(newX, newY));
+                    }
                 }
             }
 
             return availableMoves;
+        
         }
         
         private bool IsWithinChessboardBounds(int x, int y)

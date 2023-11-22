@@ -28,7 +28,12 @@ namespace Data
 
                 if (IsWithinChessboardBounds(newX, newY))
                 {
-                    availableMoves.Add(new Vector2Int(newX, newY));
+                    Piece piece = ChessBoard.GetTile(newX, newY);
+
+                    if (piece == null || piece.PlayerColor == GameManager.Instance.Opponent)
+                    {
+                        availableMoves.Add(new Vector2Int(newX, newY));
+                    }
                 }
             }
 

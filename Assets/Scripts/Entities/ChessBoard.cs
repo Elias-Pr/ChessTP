@@ -112,7 +112,7 @@ namespace Entities
             }
         }
 
-        private static void DestroyOldTiles()
+        public static void DestroyOldTiles()
         {
             var children = new List<TileHandler>(_tileParent.GetComponentsInChildren<TileHandler>());
             foreach (var handler in children)
