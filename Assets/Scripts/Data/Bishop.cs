@@ -11,7 +11,9 @@ namespace Data
         
 
         public Bishop(GameObject prefab, PlayerColor playerColor) : base(prefab, playerColor) { }
-    
+
+        public override int Score => 3;
+
         public override List<Vector2Int> GetAvailableMoves()
         {
             Vector2Int position = GameManager.Instance.SelectedPiecePosition;

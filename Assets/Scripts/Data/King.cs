@@ -12,6 +12,8 @@ namespace Data
         {
         }
 
+        public override int Score => 160 ; //Score de toutes les autres pièces alliés * 4
+
         public override List<Vector2Int> GetAvailableMoves()
         {
             Vector2Int position = GameManager.Instance.SelectedPiecePosition;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Core;
 using Data;
 using Entities;
+using MiniMax;
 using UnityEngine;
 
 namespace Managers {
@@ -25,6 +26,11 @@ namespace Managers {
         private void Start()
         {
             Debug.Log("test Matrix");
+            
+            //test Node
+            Node node = new Node(ChessBoard.Matrix, PlayerColor.Black, PlayerColor.Black);
+            Debug.Log(node.GetHeuristicValue());
+            
             for (int c = 0;  c<8; c++)
             {
                 for (int r = 0; r < 8; r++)
@@ -34,12 +40,13 @@ namespace Managers {
             }
         }
 
+        
+        
         private void Update()
         {
             
             if (_playerTurn == PlayerColor.White)
             {
-                    
                 DisableOpponentPieceColliders(PlayerColor.Black);
             }
             else if (_playerTurn == PlayerColor.Black)

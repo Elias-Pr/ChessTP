@@ -12,7 +12,9 @@ namespace Data
         public Queen(GameObject prefab, PlayerColor playerColor, GameObject handler = null) : base(prefab, playerColor, handler)
         {
         }
-    
+
+        public override int Score => 10;
+
         public override List<Vector2Int> GetAvailableMoves()
         {
             Vector2Int position = GameManager.Instance.SelectedPiecePosition;

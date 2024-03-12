@@ -35,6 +35,8 @@ namespace Entities
         public Transform tileParent;
         private List<GameObject> _allPieces;
         public static Piece[,] Matrix { get; private set; }
+        
+        
 
 
         private void Awake()

@@ -8,9 +8,12 @@ namespace Data
 {
     public class Pawn : Piece
     {
+        
         public Pawn(GameObject prefab, PlayerColor playerColor, GameObject handler = null) : base(prefab, playerColor, handler)
         {
         }
+
+        public override int Score => 1;
 
         public override List<Vector2Int> GetAvailableMoves()
         {

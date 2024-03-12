@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Core;
 using UnityEngine;
+using Entities;
 
 namespace Data
 {
@@ -9,6 +10,8 @@ namespace Data
         public GameObject Behaviour { get; set; }
         public GameObject Prefab;
         public PlayerColor PlayerColor;
+        
+        public abstract int Score { get; }
 
         protected Piece(GameObject prefab, PlayerColor playerColor, GameObject handler = null)
         {
