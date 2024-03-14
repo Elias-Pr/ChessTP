@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Core;
 using Data;
 using Entities;
 using MiniMax;
 using UnityEngine;
+using UnityEngine.Serialization;
+using Debug = UnityEngine.Debug;
 
 namespace Managers {
     
@@ -18,20 +21,47 @@ namespace Managers {
         public Camera WhiteCam;
         public Camera BlackCam;
         
-        
-
         private PlayerColor _playerTurn = PlayerColor.White; 
         public PlayerColor Opponent => _playerTurn == PlayerColor.White ? PlayerColor.Black : PlayerColor.White;
+        
+        //Minimax param
+        public static PlayerColor Owner;
+        
+        MiniMaxLogic minimax = new MiniMaxLogic();
 
+
+        [ContextMenu("Think")]
+        private void Think()
+        {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            
+            bool isOwnerTurn = Owner == _playerTurn;
+            Node node = new Node(ChessBoard.Matrix, Owner, _playerTurn, Vector2Int.zero);
+            Node bestChild = null;
+            
+            foreach (Node child in node.GetChilds())
+            {
+                minimax.MinimaxFunction(node, 2, isOwnerTurn);
+                bestChild = child;
+            }
+            
+            if (bestChild != null)
+            {
+                
+            }
+            
+            // Utiliser bestChild pour récupérer le *nouveau plateau (*mouvement et déplacer la piece)
+
+            stopwatch.Stop();
+            float elapsedSeconds = (float) Math.Round(stopwatch.ElapsedMilliseconds / 1000.0, 2);
+            Debug.Log("ui c'est " + bestChild);
+            Debug.Log("elapsed time : " + elapsedSeconds);
+        }
+        
         private void Start()
         {
-            Debug.Log("test Matrix");
-            
-            //test Node
-            Node node = new Node(ChessBoard.Matrix, PlayerColor.Black, PlayerColor.Black);
-            Debug.Log(node.GetHeuristicValue());
-            
-            for (int c = 0;  c<8; c++)
+            for (int c = 0; c <8; c++)
             {
                 for (int r = 0; r < 8; r++)
                 {

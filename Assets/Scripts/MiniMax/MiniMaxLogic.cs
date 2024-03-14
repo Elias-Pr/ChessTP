@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace MiniMax
@@ -19,19 +22,40 @@ namespace MiniMax
     value := min(value, minimax(child, depth − 1, TRUE))
     return value*/
 
-        /*private int MinimaxFunction(Node node, int depth, bool maximizingPlayer)
+        public int MinimaxFunction(Node node, int depth, bool maximizingPlayer)
         {
-            if (depth = 0 || node.GetComponent<>())
+            if (depth == 0 || node.IsTerminal)
             {
-               return node.GetHeuristicValue()
-            }
+                return node.GetHeuristicValue();
+            } 
+            int value = 0; //La valeur heuristique du node (max ou min en fonction du tour en cours)
 
+            List<Node> currentNodeList = node.GetChilds();
+            
             if (maximizingPlayer)
             {
-                
+                value = int.MinValue;
+                foreach (Node childNode in currentNodeList)
+                {
+                    value = Math.Max(value, MinimaxFunction(childNode,
+                        depth - 1, false));
+                }
             }
+            else
+            {
+                value = int.MaxValue;
+                foreach (Node childNode in currentNodeList)
+                {
+                    value = Math.Min(value, MinimaxFunction(childNode,
+                        depth - 1, true));
+                }
+            }
+
+            return value;
+        }
+
+        
             
-        }*/
-    
     }
+    
 }
