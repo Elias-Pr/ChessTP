@@ -37,25 +37,36 @@ namespace Managers {
             stopwatch.Start();
             
             bool isOwnerTurn = Owner == _playerTurn;
-            Node node = new Node(ChessBoard.Matrix, Owner, _playerTurn, Vector2Int.zero);
+            Node node = new Node(ChessBoard.Matrix, Owner, _playerTurn, Vector2Int.zero, Vector2Int.zero);
             Node bestChild = null;
             
             foreach (Node child in node.GetChilds())
             {
                 minimax.MinimaxFunction(node, 2, isOwnerTurn);
-                bestChild = child;
+
+                if (bestChild == null || child.GetHeuristicValue() > bestChild.GetHeuristicValue())
+                {
+                    bestChild = child;
+                }
             }
             
             if (bestChild != null)
             {
+                Debug.Log(bestChild.GetHeuristicValue());
+
                 
+                ChessBoard.Matrix = bestChild.CurrentBoard;
+                SelectedPiecePosition = bestChild.InitialPos;
+                _selectedTile = bestChild.Move;
+                ResolveMoveAI();
+
             }
             
             // Utiliser bestChild pour récupérer le *nouveau plateau (*mouvement et déplacer la piece)
 
             stopwatch.Stop();
             float elapsedSeconds = (float) Math.Round(stopwatch.ElapsedMilliseconds / 1000.0, 2);
-            Debug.Log("ui c'est " + bestChild);
+            Debug.Log("ui c'est " + bestChild.GetHeuristicValue());
             Debug.Log("elapsed time : " + elapsedSeconds);
         }
         
@@ -166,11 +177,43 @@ namespace Managers {
             
             
         }
+
+        private void ResolveMoveAI()
+        {
+
+           
+            Piece destination = ChessBoard.GetTile(_selectedTile);
+            if (destination == null || destination.PlayerColor == Opponent)
+            {
+                if (destination != null && destination.PlayerColor == Opponent)
+                {
+                    Destroy(ChessBoard.Matrix[_selectedTile.x, _selectedTile.y].Behaviour.gameObject);
+                }
+                
+                ChessBoard.Matrix[_selectedTile.x, _selectedTile.y] = ChessBoard.Matrix[SelectedPiecePosition.x, SelectedPiecePosition.y];
+                ChessBoard.Matrix[SelectedPiecePosition.x, SelectedPiecePosition.y] = null;
+
+                ChessBoard.Matrix[_selectedTile.x, _selectedTile.y].Behaviour.transform.position =
+                    new Vector3(_selectedTile.x, 0, _selectedTile.y);
+                
+                _selectedPiece = null;
+                
+                
+                
+                ChangeTurn();
+            }
+
+            else
+            {
+                Debug.Log("AI Invalid move !");
+            }
+            ChessBoard.DestroyOldTiles();
+            
+        }
         
         private void ResolveMove()
         {
             Piece destination = ChessBoard.GetTile(_selectedTile.x, _selectedTile.y);
-
             
             if (destination == null || destination.PlayerColor == Opponent)
             {
@@ -188,6 +231,7 @@ namespace Managers {
                 _selectedPiece.Behaviour.GetComponent<PieceHandler>().Unselected();
                 _selectedPiece = null;
                 PieceIsSelected = false;
+                
                 ChangeTurn();
             }
             else
