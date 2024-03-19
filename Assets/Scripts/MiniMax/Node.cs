@@ -44,11 +44,11 @@ namespace MiniMax
                     if (piece == null) continue;
                     if (piece.PlayerColor != _turn) continue;
 
-                    List<Vector2Int> availableMoves = piece.GetAvailableMoves();
+                    List<Vector2Int> availableMoves = piece.GetAvailableMoves(new Vector2Int(row,column));
                     
                     foreach (Vector2Int move in availableMoves)
                     {
-                        Node newNode = new Node(_currentBoard, _owner, _turn, move, new Vector2Int(row,column));
+                        Node newNode = new (_currentBoard, _owner, _turn, move, new Vector2Int(row,column));
                         nodelist.Add(newNode);
                     }
                 }

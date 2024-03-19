@@ -20,7 +20,7 @@ namespace Data
             PlayerColor = playerColor;
         }
         
-        public virtual List<Vector2Int> GetAvailableMoves()
+        public virtual List<Vector2Int> GetAvailableMoves(Vector2Int position)
         {
             List<Vector2Int> availableMoves = new List<Vector2Int>
             {

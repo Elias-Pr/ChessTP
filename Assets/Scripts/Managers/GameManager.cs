@@ -35,11 +35,11 @@ namespace Managers {
         {
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
-            
+    
             bool isOwnerTurn = Owner == _playerTurn;
             Node node = new Node(ChessBoard.Matrix, Owner, _playerTurn, Vector2Int.zero, Vector2Int.zero);
             Node bestChild = null;
-            
+    
             foreach (Node child in node.GetChilds())
             {
                 minimax.MinimaxFunction(node, 2, isOwnerTurn);
@@ -49,19 +49,18 @@ namespace Managers {
                     bestChild = child;
                 }
             }
-            
+    
             if (bestChild != null)
             {
                 Debug.Log(bestChild.GetHeuristicValue());
-
-                
                 ChessBoard.Matrix = bestChild.CurrentBoard;
-                SelectedPiecePosition = bestChild.InitialPos;
+                // Set the correct SelectedPiecePosition based on the selected piece in bestChild
+                SelectedPiecePosition = bestChild.InitialPos; // Make sure bestChild.InitialPos is correctly set in your Node class
                 _selectedTile = bestChild.Move;
                 ResolveMoveAI();
 
             }
-            
+    
             // Utiliser bestChild pour récupérer le *nouveau plateau (*mouvement et déplacer la piece)
 
             stopwatch.Stop();
@@ -117,13 +116,13 @@ namespace Managers {
             if (_playerTurn == PlayerColor.White)
             {
                 WhiteCam.gameObject.SetActive(true);
-                BlackCam.gameObject.SetActive(false);
+                //BlackCam.gameObject.SetActive(false);
             }
-            else if (_playerTurn == PlayerColor.Black)
+            /*else if (_playerTurn == PlayerColor.Black)
             {
                 WhiteCam.gameObject.SetActive(false);
                 BlackCam.gameObject.SetActive(true);
-            }
+            }*/
         }
 
         public  void SelectPiece(Transform piece)
@@ -160,7 +159,7 @@ namespace Managers {
 
             PieceIsSelected = true;
 
-            List<Vector2Int> availableMoves = _selectedPiece.GetAvailableMoves(); 
+            List<Vector2Int> availableMoves = _selectedPiece.GetAvailableMoves(SelectedPiecePosition); 
             ChessBoard.GenerateTiles(availableMoves);
             
         }

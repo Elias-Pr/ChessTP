@@ -15,9 +15,9 @@ namespace Data
 
         public override int Score => 1;
 
-        public override List<Vector2Int> GetAvailableMoves()
+        public override List<Vector2Int> GetAvailableMoves(Vector2Int position)
         {
-            Vector2Int position = GameManager.Instance.SelectedPiecePosition;
+            //Vector2Int position = GameManager.Instance.SelectedPiecePosition;
     
             List<Vector2Int> availableMoves = new List<Vector2Int>();
 
