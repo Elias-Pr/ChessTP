@@ -8,6 +8,7 @@ using MiniMax;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Debug = UnityEngine.Debug;
+using Random = UnityEngine.Random;
 
 namespace Managers {
     
@@ -48,16 +49,24 @@ namespace Managers {
                 {
                     bestChild = child;
                 }
+                else if (child.GetHeuristicValue() == bestChild.GetHeuristicValue())
+                {
+                    if (Random.Range(0, 2) == 0)
+                    {
+                        bestChild = child;
+                    }
+                }
             }
     
             if (bestChild != null)
             {
-                Debug.Log(bestChild.GetHeuristicValue());
+                
                 ChessBoard.Matrix = bestChild.CurrentBoard;
                 // Set the correct SelectedPiecePosition based on the selected piece in bestChild
                 SelectedPiecePosition = bestChild.InitialPos; // Make sure bestChild.InitialPos is correctly set in your Node class
                 _selectedTile = bestChild.Move;
                 ResolveMoveAI();
+                Debug.Log(bestChild.GetHeuristicValue());
 
             }
     
@@ -65,7 +74,6 @@ namespace Managers {
 
             stopwatch.Stop();
             float elapsedSeconds = (float) Math.Round(stopwatch.ElapsedMilliseconds / 1000.0, 2);
-            Debug.Log("ui c'est " + bestChild.GetHeuristicValue());
             Debug.Log("elapsed time : " + elapsedSeconds);
         }
         

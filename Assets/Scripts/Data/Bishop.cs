@@ -8,9 +8,22 @@ namespace Data
 {
     public class Bishop : Piece
     {
-        
 
-        public Bishop(GameObject prefab, PlayerColor playerColor) : base(prefab, playerColor) { }
+
+        public Bishop(GameObject prefab, PlayerColor playerColor) : base(prefab, playerColor)
+        {
+            positionalValues = new int[]
+            {
+                -20, -10, -10, -10, -10, -10, -10, -20,
+                -10, 0, 0, 0, 0, 0, 0, -10,
+                -10, 0, 5, 10, 10, 5, 0, -10,
+                -10, 5, 5, 10, 10, 5, 5, -10,
+                -10, 0, 10, 10, 10, 10, 0, -10,
+                -10, 10, 10, 10, 10, 10, 10, -10,
+                -10, 5, 0, 0, 0, 0, 5, -10,
+                -20, -10, -10, -10, -10, -10, -10, -20
+            };
+        }
 
         public override int Score => 3;
 

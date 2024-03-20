@@ -13,6 +13,8 @@ namespace Data
         
         public abstract int Score { get; }
 
+        protected int[] positionalValues;
+
         protected Piece(GameObject prefab, PlayerColor playerColor, GameObject handler = null)
         {
             Behaviour = handler;
@@ -35,6 +37,12 @@ namespace Data
             };
 
             return availableMoves;
+        }
+
+        public virtual int GetPositionalValue(Vector2Int position)
+        {
+            int index = position.x * 8 + position.y;
+            return positionalValues[index];
         }
     }
 }

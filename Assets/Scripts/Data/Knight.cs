@@ -10,6 +10,17 @@ namespace Data
     {
         public Knight(GameObject prefab, PlayerColor playerColor, GameObject handler = null) : base(prefab, playerColor, handler)
         {
+            positionalValues = new int[]
+            {
+                -200, -100, -50, -50, -50, -50, -100, -200,
+                -100, 0, 0, 0, 0, 0, 0, -100,
+                -50, 0, 60, 60, 60, 60, 0, -50,
+                -50, 0, 30, 60, 60, 30, 0, -50,
+                -50, 0, 30, 60, 60, 30, 0, -50,
+                -50, 0, 30, 30, 30, 30, 0, -50,
+                -100, 0, 0, 0, 0, 0, 0, -100,
+                -200, -50, -25, -25, -25, -25, -50, -200
+            };
         }
 
         public override int Score => 3;

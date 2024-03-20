@@ -11,6 +11,17 @@ namespace Data
         
         public Pawn(GameObject prefab, PlayerColor playerColor, GameObject handler = null) : base(prefab, playerColor, handler)
         {
+            positionalValues = new int[]
+            {
+                0, 0, 0, 0, 0, 0, 0, 0,
+                50, 50, 50, 50, 50, 50, 50, 50,
+                10, 10, 20, 30, 30, 20, 10, 10,
+                5, 5, 10, 25, 25, 10, 5, 5,
+                0, 0, 0, 20, 20, 0, 0, 0,
+                5, -5, -10, 0, 0, -10, -5, 5,
+                5, 10, 10, -20, -20, 10, 10, 5,
+                0, 0, 0, 0, 0, 0, 0, 0
+            };
         }
 
         public override int Score => 1;
@@ -26,17 +37,18 @@ namespace Data
             int newX = position.x + forwardDirection;
             int newY = position.y;
             
-            if (IsWithinChessboardBounds(newX, newY))
+            if (IsWithinChessboardBounds(newX, newY) && GameManager.Instance.IsPositionEmpty(newX, newY))
             {
                 availableMoves.Add(new Vector2Int(newX, newY));
-            }
 
-            if ((PlayerColor == PlayerColor.White && position.x == 1) || (PlayerColor == PlayerColor.Black && position.x == 6))
-            {
-                int doubleMoveX = position.x + 2 * forwardDirection;
-                if (IsWithinChessboardBounds(doubleMoveX, newY))
+                // If the pawn is on its starting row, allow it to move two tiles forward if the next tile is also empty
+                if ((PlayerColor == PlayerColor.White && position.x == 1) || (PlayerColor == PlayerColor.Black && position.x == 6))
                 {
-                    availableMoves.Add(new Vector2Int(doubleMoveX, newY));
+                    int doubleMoveX = position.x + 2 * forwardDirection;
+                    if (IsWithinChessboardBounds(doubleMoveX, newY) && GameManager.Instance.IsPositionEmpty(doubleMoveX, newY))
+                    {
+                        availableMoves.Add(new Vector2Int(doubleMoveX, newY));
+                    }
                 }
             }
 
