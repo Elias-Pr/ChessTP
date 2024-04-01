@@ -36,20 +36,24 @@ namespace Managers {
         {
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
-    
+
             bool isOwnerTurn = Owner == _playerTurn;
             Node node = new Node(ChessBoard.Matrix, Owner, _playerTurn, Vector2Int.zero, Vector2Int.zero);
             Node bestChild = null;
-    
+
+            int depth = 4;
+            int alpha = int.MinValue; // Initial value of alpha
+            int beta = int.MaxValue; // Initial value of beta
+
             foreach (Node child in node.GetChilds())
             {
-                minimax.MinimaxFunction(node, 2, isOwnerTurn);
+                int score = minimax.MinimaxFunction(child, depth - 1, alpha, beta, !isOwnerTurn);
 
-                if (bestChild == null || child.GetHeuristicValue() > bestChild.GetHeuristicValue())
+                if (bestChild == null || score > bestChild.GetHeuristicValue())
                 {
                     bestChild = child;
                 }
-                else if (child.GetHeuristicValue() == bestChild.GetHeuristicValue())
+                else if (score == bestChild.GetHeuristicValue())
                 {
                     if (Random.Range(0, 2) == 0)
                     {
@@ -57,25 +61,21 @@ namespace Managers {
                     }
                 }
             }
-    
+
             if (bestChild != null)
             {
-                
                 ChessBoard.Matrix = bestChild.CurrentBoard;
-                // Set the correct SelectedPiecePosition based on the selected piece in bestChild
-                SelectedPiecePosition = bestChild.InitialPos; // Make sure bestChild.InitialPos is correctly set in your Node class
+                SelectedPiecePosition = bestChild.InitialPos;
                 _selectedTile = bestChild.Move;
                 ResolveMoveAI();
                 Debug.Log(bestChild.GetHeuristicValue());
-
             }
-    
-            // Utiliser bestChild pour récupérer le *nouveau plateau (*mouvement et déplacer la piece)
 
             stopwatch.Stop();
-            float elapsedSeconds = (float) Math.Round(stopwatch.ElapsedMilliseconds / 1000.0, 2);
+            float elapsedSeconds = (float)Math.Round(stopwatch.ElapsedMilliseconds / 1000.0, 2);
             Debug.Log("elapsed time : " + elapsedSeconds);
         }
+
         
         private void Start()
         {
