@@ -47,7 +47,7 @@ namespace Managers {
 
             foreach (Node child in node.GetChilds())
             {
-                int score = minimax.MinimaxFunction(child, depth - 1, alpha, beta, !isOwnerTurn);
+                int score = minimax.MinimaxFunctionAlphaBeta(child, depth - 1, alpha, beta, !isOwnerTurn);
 
                 if (bestChild == null || score > bestChild.GetHeuristicValue())
                 {

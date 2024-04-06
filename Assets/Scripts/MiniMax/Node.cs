@@ -61,36 +61,23 @@ namespace MiniMax
         public int GetHeuristicValue()
         {
             int heuristicValue = 0;
-            
-                    foreach (Piece piece in _currentBoard)
-                    {
-                        if (piece == null) continue;
-                        if (piece.PlayerColor != _turn) continue;
-                        
-                        
-                        heuristicValue += piece.Score;
-                        
-                        Vector2Int piecePosition = FindPiecePosition(piece);
-                        heuristicValue += piece.GetPositionalValue(piecePosition);
-                    }
-            return heuristicValue;
-        }
 
-        public Vector2Int FindPiecePosition(Piece pieceExemple)
-        {
             for (int row = 0; row < 8; row++)
             {
                 for (int column = 0; column < 8; column++)
                 {
                     Piece piece = _currentBoard[row, column];
-                    if (piece == pieceExemple)
-                    {
-                        return new Vector2Int(row, column);
-                    }
+                    if (piece == null) continue;
+                    if (piece.PlayerColor != _turn) continue;
+
+                    heuristicValue += piece.Score;
+
+                    Vector2Int piecePosition = new Vector2Int(row, column);
+                    heuristicValue += piece.GetPositionalValue(piecePosition);
                 }
             }
 
-            return Vector2Int.zero;
+            return heuristicValue;
         }
 
     }
