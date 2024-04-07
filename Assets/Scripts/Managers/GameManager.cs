@@ -42,6 +42,7 @@ namespace Managers {
             Node bestChild = null;
 
             int depth = 4;
+            
             int alpha = int.MinValue; // Initial value of alpha
             int beta = int.MaxValue; // Initial value of beta
 

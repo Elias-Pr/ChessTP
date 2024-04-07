@@ -74,6 +74,18 @@ namespace MiniMax
 
                     Vector2Int piecePosition = new Vector2Int(row, column);
                     heuristicValue += piece.GetPositionalValue(piecePosition);
+                    
+                    List<Vector2Int> availableMoves = piece.GetAvailableMoves(new Vector2Int(row,column));
+                    foreach (Vector2Int move in availableMoves)
+                    {
+                        Piece targetPiece = _currentBoard[move.x, move.y];
+                        if (targetPiece != null && targetPiece.PlayerColor != _turn)
+                        {
+                            heuristicValue += targetPiece.Score;
+                        }
+                    }
+                    
+                    
                 }
             }
 
