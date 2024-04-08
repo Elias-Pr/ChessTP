@@ -70,7 +70,7 @@ namespace MiniMax
                     if (piece == null) continue;
                     if (piece.PlayerColor != _turn) continue;
 
-                    heuristicValue += piece.Score;
+                    //heuristicValue += piece.Score;
 
                     Vector2Int piecePosition = new Vector2Int(row, column);
                     heuristicValue += piece.GetPositionalValue(piecePosition);
