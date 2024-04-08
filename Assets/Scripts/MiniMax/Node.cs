@@ -70,27 +70,35 @@ namespace MiniMax
                     if (piece == null) continue;
                     if (piece.PlayerColor != _turn) continue;
 
-                    //heuristicValue += piece.Score;
-
                     Vector2Int piecePosition = new Vector2Int(row, column);
-                    heuristicValue += piece.GetPositionalValue(piecePosition);
-                    
-                    List<Vector2Int> availableMoves = piece.GetAvailableMoves(new Vector2Int(row,column));
+
+                    heuristicValue += piece.Score;
+
+                    if (_turn == _owner)
+                    {
+                        heuristicValue += piece.GetPositionalValue(piecePosition);
+                    }
+                    else
+                    {
+                        heuristicValue += piece.GetOppositPosValue(piecePosition);
+                    }
+
+                    List<Vector2Int> availableMoves = piece.GetAvailableMoves(new Vector2Int(row, column));
                     foreach (Vector2Int move in availableMoves)
                     {
                         Piece targetPiece = _currentBoard[move.x, move.y];
+
                         if (targetPiece != null && targetPiece.PlayerColor != _turn)
                         {
                             heuristicValue += targetPiece.Score;
                         }
                     }
-                    
-                    
                 }
             }
 
             return heuristicValue;
         }
+
 
     }
 }

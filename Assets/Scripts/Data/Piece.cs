@@ -14,6 +14,7 @@ namespace Data
         public abstract int Score { get; }
 
         protected int[] positionalValues;
+        public int[] oppositPosValues;
 
         protected Piece(GameObject prefab, PlayerColor playerColor, GameObject handler = null)
         {
@@ -43,6 +44,12 @@ namespace Data
         {
             int index = position.x * 8 + position.y;
             return positionalValues[index];
+        }
+        
+        public virtual int GetOppositPosValue(Vector2Int position)
+        {
+            int index = position.x * 8 + position.y;
+            return oppositPosValues[index];
         }
     }
 }

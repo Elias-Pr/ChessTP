@@ -10,6 +10,18 @@ namespace Data
         
         public Rook(GameObject prefab, PlayerColor playerColor, GameObject handler = null) : base(prefab, playerColor, handler)
         {
+            oppositPosValues = new int[]
+            {
+                0, 0, 0, 5, 5, 0, 0, 0,
+                -5, 0, 0, 0, 0, 0, 0, -5,
+                -5, 0, 0, 0, 0, 0, 0, -5,
+                -5, 0, 0, 0, 0, 0, 0, -5,
+                -5, 0, 0, 0, 0, 0, 0, -5,
+                -5, 0, 0, 0, 0, 0, 0, -5,
+                5, 10, 10, 10, 10, 10, 10, 5,
+                0, 0, 0, 0, 0, 0, 0, 0
+            };
+            
             positionalValues = new int[]
             {
                 0, 0, 0, 0, 0, 0, 0, 0,

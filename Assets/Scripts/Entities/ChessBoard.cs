@@ -90,32 +90,32 @@ namespace Entities
             Matrix = new Piece[,]
             {
                 {
-                    new Rook(whiteRookPrefab, PlayerColor.White), new Knight(whiteKnightPrefab, PlayerColor.White),
-                    new Bishop(whiteBishopPrefab, PlayerColor.White), new King(whiteKingPrefab, PlayerColor.White),
-                    new Queen(whiteQueenPrefab, PlayerColor.White), new Bishop(whiteBishopPrefab, PlayerColor.White),
-                    new Knight(whiteKnightPrefab, PlayerColor.White), new Rook(whiteRookPrefab, PlayerColor.White)
+                    new Rook(whiteRookPrefab, PlayerColor.White), null,
+                    null, null,
+                    new Rook(whiteRookPrefab, PlayerColor.White), null,
+                    new King(whiteKingPrefab, PlayerColor.White), null
                 },
                 {
-                    new Pawn(whitePawnPrefab, PlayerColor.White), new Pawn(whitePawnPrefab, PlayerColor.White),
-                    new Pawn(whitePawnPrefab, PlayerColor.White), new Pawn(whitePawnPrefab, PlayerColor.White),
-                    new Pawn(whitePawnPrefab, PlayerColor.White), new Pawn(whitePawnPrefab, PlayerColor.White),
-                    new Pawn(whitePawnPrefab, PlayerColor.White), new Pawn(whitePawnPrefab, PlayerColor.White)
+                    new Pawn(whitePawnPrefab, PlayerColor.White), null,
+                    new Queen(whiteQueenPrefab, PlayerColor.White), new Knight(whiteKnightPrefab, PlayerColor.White),
+                    null, new Pawn(whitePawnPrefab, PlayerColor.White),
+                    null, new Pawn(whitePawnPrefab, PlayerColor.White)
                 },
-                { null, null, null, null, null, null, null, null },
-                { null, null, null, null, null, null, null, null },
-                { null, null, null, null, null, null, null, null },
-                { null, null, null, null, null, null, null, null },
+                { null, null, new Pawn(whitePawnPrefab, PlayerColor.White), new Bishop(whiteBishopPrefab, PlayerColor.White), new Bishop(whiteBishopPrefab, PlayerColor.White), new Pawn(whitePawnPrefab, PlayerColor.White), null, null },
+                { null, null, null, new Pawn(whitePawnPrefab, PlayerColor.White), null, null, null, null },
+                { null, new Pawn(whitePawnPrefab, PlayerColor.White), null, null, null, null, new Pawn(blackPawnPrefab, PlayerColor.Black), null },
+                { null, null, null, new Pawn(blackPawnPrefab, PlayerColor.Black), new Pawn(blackPawnPrefab, PlayerColor.Black), null, new Knight(blackKnightPrefab, PlayerColor.Black), new Pawn(blackPawnPrefab, PlayerColor.Black) },
                 {
                     new Pawn(blackPawnPrefab, PlayerColor.Black), new Pawn(blackPawnPrefab, PlayerColor.Black),
-                    new Pawn(blackPawnPrefab, PlayerColor.Black), new Pawn(blackPawnPrefab, PlayerColor.Black),
-                    new Pawn(blackPawnPrefab, PlayerColor.Black), new Pawn(blackPawnPrefab, PlayerColor.Black),
-                    new Pawn(blackPawnPrefab, PlayerColor.Black), new Pawn(blackPawnPrefab, PlayerColor.Black)
+                    new Pawn(blackPawnPrefab, PlayerColor.Black), new Bishop(blackBishopPrefab, PlayerColor.Black),
+                    new Knight(blackKnightPrefab, PlayerColor.Black), new Queen(blackQueenPrefab, PlayerColor.Black),
+                    new Bishop(blackBishopPrefab, PlayerColor.Black), null
                 },
                 {
-                    new Rook(blackRookPrefab, PlayerColor.Black), new Knight(blackKnightPrefab, PlayerColor.Black),
-                    new Bishop(blackBishopPrefab, PlayerColor.Black), new King(blackKingPrefab, PlayerColor.Black),
-                    new Queen(blackQueenPrefab, PlayerColor.Black), new Bishop(blackBishopPrefab, PlayerColor.Black),
-                    new Knight(blackKnightPrefab, PlayerColor.Black), new Rook(blackRookPrefab, PlayerColor.Black)
+                    null, new King(blackKingPrefab, PlayerColor.Black),
+                    new Rook(blackRookPrefab, PlayerColor.Black), null,
+                    null, null,
+                    null, null
                 }
             };
         }
