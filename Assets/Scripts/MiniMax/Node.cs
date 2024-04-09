@@ -103,7 +103,7 @@ namespace MiniMax
     }
 }
 
-/*fonction d'évaluation
+/*Objectif fonction d'évaluation
 
        Queen = 10
        Rook = 5
@@ -113,7 +113,4 @@ namespace MiniMax
        Piece menacing ennemy piece without being menaced = ennemy piece value
                                    while being menaced by an equal piece = null
                                    while being menaced by an higer rated piece = ennemy piece value
-                                   while being menaced by a lower rated piece = - current piece value
-
-
-       */
+                                   while being menaced by a lower rated piece = - current piece value*/
