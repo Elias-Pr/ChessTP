@@ -43,8 +43,8 @@ namespace Managers {
 
             int depth = 4;
             
-            int alpha = int.MinValue; // Initial value of alpha
-            int beta = int.MaxValue; // Initial value of beta
+            int alpha = int.MinValue; // alpha
+            int beta = int.MaxValue; // beta
 
             foreach (Node child in node.GetChilds())
             {
@@ -105,7 +105,6 @@ namespace Managers {
             
             if (PieceIsSelected && TileIsSelected)
             {
-                
                 ResolveMove();
 
                 EnableOpponentPieceColliders(PlayerColor.Black);

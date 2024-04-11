@@ -21,6 +21,8 @@ namespace MiniMax
     for each child of node do
     value := min(value, minimax(child, depth − 1, TRUE))
     return value*/
+        
+        
         public int MinimaxFunctionAlphaBeta(Node node, int depth, int alpha, int beta, bool maximizingPlayer)
             {
                 if (depth == 0 || node.IsTerminal)

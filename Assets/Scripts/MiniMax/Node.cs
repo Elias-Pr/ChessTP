@@ -84,7 +84,7 @@ namespace MiniMax
                     }
 
                     List<Vector2Int> availableMoves = piece.GetAvailableMoves(new Vector2Int(row, column));
-                    foreach (Vector2Int move in availableMoves)
+                    /*foreach (Vector2Int move in availableMoves)
                     {
                         Piece targetPiece = _currentBoard[move.x, move.y];
 
@@ -92,7 +92,7 @@ namespace MiniMax
                         {
                             heuristicValue += targetPiece.Score;
                         }
-                    }
+                    }*/
                 }
             }
 

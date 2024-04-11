@@ -44,9 +44,8 @@ namespace Entities
             _pieceParent = pieceParent;
             _tileParent = tileParent;
             _tilePrefab = tilePrefab;
-
-            //BaseMatrix();
-            TestMatrix();
+            
+            BaseMatrix();
             InitAllPiecesBehaviours();
         }
 
